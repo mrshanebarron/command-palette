@@ -11,14 +11,14 @@ class command-paletteServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/ld-command-palette.php', 'ld-command-palette');
+        $this->mergeConfigFrom(__DIR__ . '/../config/sb-command-palette.php', 'sb-command-palette');
     }
 
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'ld-command-palette');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'sb-command-palette');
 
-        Livewire::component('ld-command-palette', command-palette::class);
+        Livewire::component('sb-command-palette', command-palette::class);
 
         $this->loadViewComponentsAs('ld', [
             Bladecommand-palette::class,
@@ -26,12 +26,12 @@ class command-paletteServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/ld-command-palette.php' => config_path('ld-command-palette.php'),
-            ], 'ld-command-palette-config');
+                __DIR__ . '/../config/sb-command-palette.php' => config_path('sb-command-palette.php'),
+            ], 'sb-command-palette-config');
 
             $this->publishes([
-                __DIR__ . '/../resources/views' => resource_path('views/vendor/ld-command-palette'),
-            ], 'ld-command-palette-views');
+                __DIR__ . '/../resources/views' => resource_path('views/vendor/sb-command-palette'),
+            ], 'sb-command-palette-views');
         }
     }
 }

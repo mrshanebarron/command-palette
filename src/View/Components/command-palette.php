@@ -13,6 +13,6 @@ class command-palette extends Component
 
     public function render()
     {
-        return view('ld-command-palette::components.command-palette');
+        return view('sb-command-palette::components.command-palette');
     }
 }

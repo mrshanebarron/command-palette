@@ -58,7 +58,7 @@
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue';
 
 export default {
-  name: 'LdCommandPalette',
+  name: 'SbCommandPalette',
   props: {
     commands: { type: Array, default: () => [] },
     placeholder: { type: String, default: 'Type a command or search...' }

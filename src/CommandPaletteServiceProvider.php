@@ -9,8 +9,8 @@ class CommandPaletteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (class_exists(\Livewire\Livewire::class)) {
-            \Livewire\Livewire::component('ld-command-palette', Livewire\CommandPalette::class);
+            \Livewire\Livewire::component('sb-command-palette', Livewire\CommandPalette::class);
         }
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'ld-command-palette');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'sb-command-palette');
     }
 }

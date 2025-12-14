@@ -8,6 +8,6 @@ class command-palette extends Component
 {
     public function render()
     {
-        return view('ld-command-palette::livewire.command-palette');
+        return view('sb-command-palette::livewire.command-palette');
     }
 }
