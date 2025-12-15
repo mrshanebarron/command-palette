@@ -1,10 +1,10 @@
 <?php
 
-namespace MrShaneBarron\command-palette\View\Components;
+namespace MrShaneBarron\CommandPalette\View\Components;
 
 use Illuminate\View\Component;
 
-class command-palette extends Component
+class CommandPalette extends Component
 {
     public function __construct()
     {

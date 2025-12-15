@@ -4,8 +4,7 @@ namespace MrShaneBarron\CommandPalette;
 
 use Illuminate\Support\ServiceProvider;
 use MrShaneBarron\CommandPalette\Livewire\CommandPalette;
-use MrShaneBarron\CommandPalette\View\Components\command-palette as BladeCommandPalette;
-use Livewire\Livewire;
+use MrShaneBarron\CommandPalette\View\Components\CommandPalette as BladeCommandPalette;
 
 class CommandPaletteServiceProvider extends ServiceProvider
 {
@@ -18,7 +17,9 @@ class CommandPaletteServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'sb-command-palette');
 
-        Livewire::component('sb-command-palette', command-palette::class);
+        if (class_exists(\Livewire\Livewire::class)) {
+            \Livewire\Livewire::component('sb-command-palette', CommandPalette::class);
+        }
 
         $this->loadViewComponentsAs('ld', [
             BladeCommandPalette::class,
