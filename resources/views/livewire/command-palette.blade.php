@@ -6,6 +6,7 @@
 >
     <div
         x-show="open"
+        x-cloak
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -13,23 +14,24 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         @click="open = false"
-        class="fixed inset-0 bg-black/50 z-50"
+        style="position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); z-index: 50;"
     ></div>
 
     <div
         x-show="open"
+        x-cloak
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0 scale-95"
         x-transition:enter-end="opacity-100 scale-100"
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class="fixed inset-x-4 top-[20%] mx-auto max-w-xl bg-white rounded-xl shadow-2xl z-50 overflow-hidden"
+        style="position: fixed; left: 1rem; right: 1rem; top: 20%; margin-left: auto; margin-right: auto; max-width: 36rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); z-index: 50; overflow: hidden;"
         @click.outside="open = false"
     >
-        <div class="border-b">
-            <div class="flex items-center px-4">
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <div style="border-bottom: 1px solid #e5e7eb;">
+            <div style="display: flex; align-items: center; padding: 0 1rem;">
+                <svg style="width: 1.25rem; height: 1.25rem; color: #9ca3af;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 <input
                     type="text"
                     wire:model.live="search"
@@ -37,45 +39,46 @@
                     wire:keydown.arrow-up.prevent="selectPrevious"
                     wire:keydown.enter.prevent="executeSelected"
                     placeholder="Type a command or search..."
-                    class="w-full px-4 py-4 text-gray-900 placeholder-gray-400 focus:outline-none"
+                    style="width: 100%; padding: 1rem; font-size: 1rem; color: #111827; border: none; outline: none; background: transparent;"
                     x-ref="input"
                     x-init="$watch('open', value => value && $nextTick(() => $refs.input.focus()))"
                 >
             </div>
         </div>
 
-        <div class="max-h-80 overflow-y-auto p-2">
+        <div style="max-height: 20rem; overflow-y: auto; padding: 0.5rem;">
             @forelse($this->getFilteredCommands() as $index => $command)
+                @php
+                    $isSelected = $index === $selectedIndex;
+                    $buttonStyle = 'width: 100%; display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left; border: none; cursor: pointer; transition: background-color 0.15s;';
+                    $buttonStyle .= $isSelected ? ' background-color: #eff6ff; color: #1e3a8a;' : ' background-color: transparent; color: #374151;';
+                @endphp
                 <button
                     wire:click="$set('selectedIndex', {{ $index }}); executeSelected()"
-                    @class([
-                        'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors',
-                        'bg-blue-50 text-blue-900' => $index === $selectedIndex,
-                        'hover:bg-gray-50' => $index !== $selectedIndex,
-                    ])
+                    style="{{ $buttonStyle }}"
                 >
                     @if(isset($command['icon']))
-                        <span class="text-gray-400">{!! $command['icon'] !!}</span>
+                        <span style="color: #9ca3af; flex-shrink: 0;">{!! $command['icon'] !!}</span>
                     @endif
-                    <div>
-                        <div class="font-medium">{{ $command['label'] }}</div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-weight: 500;">{{ $command['label'] }}</div>
                         @if(isset($command['description']))
-                            <div class="text-sm text-gray-500">{{ $command['description'] }}</div>
+                            <div style="font-size: 0.875rem; color: #6b7280;">{{ $command['description'] }}</div>
                         @endif
                     </div>
                     @if(isset($command['shortcut']))
-                        <kbd class="ml-auto px-2 py-1 text-xs bg-gray-100 rounded">{{ $command['shortcut'] }}</kbd>
+                        <kbd style="margin-left: auto; padding: 0.25rem 0.5rem; font-size: 0.75rem; background-color: #f3f4f6; border-radius: 0.25rem; font-family: monospace;">{{ $command['shortcut'] }}</kbd>
                     @endif
                 </button>
             @empty
-                <div class="px-4 py-8 text-center text-gray-500">No commands found</div>
+                <div style="padding: 2rem 1rem; text-align: center; color: #6b7280;">No commands found</div>
             @endforelse
         </div>
 
-        <div class="border-t px-4 py-2 text-xs text-gray-400 flex items-center gap-4">
-            <span><kbd class="px-1.5 py-0.5 bg-gray-100 rounded">↑↓</kbd> Navigate</span>
-            <span><kbd class="px-1.5 py-0.5 bg-gray-100 rounded">↵</kbd> Select</span>
-            <span><kbd class="px-1.5 py-0.5 bg-gray-100 rounded">esc</kbd> Close</span>
+        <div style="border-top: 1px solid #e5e7eb; padding: 0.5rem 1rem; font-size: 0.75rem; color: #9ca3af; display: flex; align-items: center; gap: 1rem;">
+            <span><kbd style="padding: 0.125rem 0.375rem; background-color: #f3f4f6; border-radius: 0.25rem;">↑↓</kbd> Navigate</span>
+            <span><kbd style="padding: 0.125rem 0.375rem; background-color: #f3f4f6; border-radius: 0.25rem;">↵</kbd> Select</span>
+            <span><kbd style="padding: 0.125rem 0.375rem; background-color: #f3f4f6; border-radius: 0.25rem;">esc</kbd> Close</span>
         </div>
     </div>
 </div>
