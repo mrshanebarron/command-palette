@@ -1,35 +1,16 @@
-<style>[x-cloak] { display: none !important; }</style>
 <div
-    x-data="{ open: @entangle('open') }"
-    @keydown.meta.k.window.prevent="open = true"
-    @keydown.ctrl.k.window.prevent="open = true"
-    @keydown.escape.window="open = false"
+    x-data
+    @keydown.meta.k.window.prevent="$wire.toggle()"
+    @keydown.ctrl.k.window.prevent="$wire.toggle()"
+    @keydown.escape.window="$wire.set('open', false)"
 >
+    @if($open)
     <div
-        x-show="open"
-        x-cloak
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        @click="open = false"
+        wire:click="$set('open', false)"
         style="position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); z-index: 50;"
     ></div>
 
-    <div
-        x-show="open"
-        x-cloak
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 scale-95"
-        x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-95"
-        style="position: fixed; left: 1rem; right: 1rem; top: 20%; margin-left: auto; margin-right: auto; max-width: 36rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); z-index: 50; overflow: hidden;"
-        @click.outside="open = false"
-    >
+    <div style="position: fixed; left: 1rem; right: 1rem; top: 20%; margin-left: auto; margin-right: auto; max-width: 36rem; background-color: white; border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); z-index: 50; overflow: hidden;">
         <div style="border-bottom: 1px solid #e5e7eb;">
             <div style="display: flex; align-items: center; padding: 0 1rem;">
                 <svg style="width: 1.25rem; height: 1.25rem; color: #9ca3af;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -41,8 +22,7 @@
                     wire:keydown.enter.prevent="executeSelected"
                     placeholder="Type a command or search..."
                     style="width: 100%; padding: 1rem; font-size: 1rem; color: #111827; border: none; outline: none; background: transparent;"
-                    x-ref="input"
-                    x-init="$watch('open', value => value && $nextTick(() => $refs.input.focus()))"
+                    autofocus
                 >
             </div>
         </div>
@@ -82,4 +62,5 @@
             <span><kbd style="padding: 0.125rem 0.375rem; background-color: #f3f4f6; border-radius: 0.25rem;">esc</kbd> Close</span>
         </div>
     </div>
+    @endif
 </div>
