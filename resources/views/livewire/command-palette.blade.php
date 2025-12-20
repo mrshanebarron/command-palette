@@ -35,7 +35,7 @@
                     $buttonStyle .= $isSelected ? ' background-color: #eff6ff; color: #1e3a8a;' : ' background-color: transparent; color: #374151;';
                 @endphp
                 <button
-                    wire:click="$set('selectedIndex', {{ $index }}); executeSelected()"
+                    wire:click="selectAndExecute({{ $index }})"
                     style="{{ $buttonStyle }}"
                 >
                     @if(isset($command['icon']))

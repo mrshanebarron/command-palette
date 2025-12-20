@@ -58,6 +58,12 @@ class CommandPalette extends Component
         }
     }
 
+    public function selectAndExecute(int $index): void
+    {
+        $this->selectedIndex = $index;
+        $this->executeSelected();
+    }
+
     public function getFilteredCommands(): array
     {
         if (empty($this->search)) {
