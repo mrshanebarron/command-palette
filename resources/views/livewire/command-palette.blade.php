@@ -1,3 +1,4 @@
+<style>[x-cloak] { display: none !important; }</style>
 <div
     x-data="{ open: @entangle('open') }"
     @keydown.meta.k.window.prevent="open = true"
