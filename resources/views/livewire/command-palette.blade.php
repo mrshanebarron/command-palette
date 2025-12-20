@@ -1,8 +1,8 @@
 <div
     x-data
-    @keydown.meta.k.window.prevent="$wire.toggle()"
-    @keydown.ctrl.k.window.prevent="$wire.toggle()"
-    @keydown.escape.window="$wire.set('open', false)"
+    x-on:keydown.meta.k.window.prevent="$wire.toggle()"
+    x-on:keydown.ctrl.k.window.prevent="$wire.toggle()"
+    x-on:keydown.escape.window="$wire.set('open', false)"
 >
     @if($open)
     <div
