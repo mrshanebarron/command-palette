@@ -2,6 +2,7 @@
 
 namespace MrShaneBarron\CommandPalette\Livewire;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CommandPalette extends Component
@@ -14,6 +15,14 @@ class CommandPalette extends Component
     public function mount(array $commands = []): void
     {
         $this->commands = $commands;
+    }
+
+    #[On('toggle-command-palette')]
+    public function openPalette(): void
+    {
+        $this->open = true;
+        $this->search = '';
+        $this->selectedIndex = 0;
     }
 
     public function toggle(): void
