@@ -12,9 +12,10 @@ class CommandPalette extends Component
     public array $commands = [];
     public int $selectedIndex = 0;
 
-    public function mount(array $commands = []): void
+    public function mount(array $commands = [], bool $open = false): void
     {
         $this->commands = $commands;
+        $this->open = $open;
     }
 
     #[On('toggle-command-palette')]
