@@ -4,7 +4,7 @@
     x-on:keydown.ctrl.k.window.prevent="$wire.toggle()"
     x-on:keydown.escape.window="$wire.set('open', false)"
 >
-    @if($open)
+    @if($this->open)
     <div
         wire:click="$set('open', false)"
         style="position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); z-index: 50;"
@@ -30,7 +30,7 @@
         <div style="max-height: 20rem; overflow-y: auto; padding: 0.5rem;">
             @forelse($this->getFilteredCommands() as $index => $command)
                 @php
-                    $isSelected = $index === $selectedIndex;
+                    $isSelected = $index === $this->selectedIndex;
                     $buttonStyle = 'width: 100%; display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left; border: none; cursor: pointer; transition: background-color 0.15s;';
                     $buttonStyle .= $isSelected ? ' background-color: #eff6ff; color: #1e3a8a;' : ' background-color: transparent; color: #374151;';
                 @endphp
